@@ -1,0 +1,4 @@
+plugins:
+  discourse_basic_editor_enabled:
+    default: true
+    client: true
