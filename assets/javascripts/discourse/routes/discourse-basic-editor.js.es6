@@ -1,9 +1,11 @@
 import DiscourseRoute from 'discourse/routes/discourse'
 
 export default DiscourseRoute.extend({
-  controllerName: "actions",
+  controllerName: "bla",
+
+
 
   renderTemplate() {
-    this.render("actions");
+    this.render("discourse-basic-editor");
   }
 });
