@@ -11,6 +11,8 @@ export default Controller.extend({
       ClassicEditor.create( document.querySelector( '#editor' ) )
           .then( editor => {
               console.log( editor );
+              editor.setData("smndfnksdf _test_")
+              console.log(editor.getData()); // -> 'This is [CKEditor 5](https://ckeditor.com).'
           } )
           .catch( error => {
               console.error( error );
