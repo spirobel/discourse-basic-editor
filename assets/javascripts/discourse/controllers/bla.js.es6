@@ -12,7 +12,12 @@ export default Controller.extend({
           .then( editor => {
               console.log( editor );
               editor.setData("smndfnksdf _test_")
-              console.log(editor.getData()); // -> 'This is [CKEditor 5](https://ckeditor.com).'
+              editor.model.document.on( 'change:data', () => {
+                  console.log(editor.getData());
+              } );
+
+
+
           } )
           .catch( error => {
               console.error( error );
