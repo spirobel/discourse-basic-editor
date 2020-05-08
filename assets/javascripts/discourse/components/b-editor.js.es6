@@ -7,10 +7,11 @@ export default Ember.Component.extend({
         .then( function(editor){
             console.log( editor );
             editor.setData(this.value)
-            editor.model.document.on( 'change:data', () => {
+            editor.model.document.on( 'change:data', function() {
                 console.log(editor.getData());
+                console.log(this.validation)
                 this.set('value', editor.getData());
-            } );
+            }.bind(this) );
 
 
 
