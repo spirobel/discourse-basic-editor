@@ -3,6 +3,7 @@ import { cookAsync } from "discourse/lib/text";
 import { debounce, later, next, schedule, scheduleOnce } from "@ember/runloop";
 import ENV from "discourse-common/config/environment";
 export default Ember.Component.extend({
+  classNames: ["d-editor"],
   _updatePreview() {
    if (this._state !== "inDOM") {
      return;
