@@ -1,5 +1,16 @@
-{{popup-input-tip validation=validation}}
+<div class="d-editor-container">
+  <div class="d-editor-textarea-wrapper {{if disabled "disabled"}}">
+    {{conditional-loading-spinner condition=loading}}
 
-<div id="editor">
-  b-editor
+    {{popup-input-tip validation=validation}}
+
+    <div id="editor">
+      b-editor
+    </div>
+  </div>
+
+  <div class="d-editor-preview-wrapper {{if forcePreview "force-preview"}}">
+    <div class="d-editor-preview">{{html-safe preview}}</div>
+  {{plugin-outlet name="editor-preview" classNames="d-editor-plugin" args=outletArgs}}
+  </div>
 </div>
