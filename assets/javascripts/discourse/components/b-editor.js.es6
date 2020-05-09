@@ -34,21 +34,28 @@ export default Ember.Component.extend({
   loadScript("/plugins/DiscourseBasicEditor/ckeditor.js").then(() => {
     ClassicEditor.create( document.querySelector( '#editor' ))
         .then( function(editor){
+    function calc_editor_size() {
+          var bla = $(".b-editor-textarea-wrapper").innerHeight()
+          var sib_height = 0;
+          $(".ck-editor__main").siblings().each(function ()
+          {
+            sib_height += $(this).height();
+
+          });
+
+          var edit_h= bla- sib_height - 5
+
+            this.editing.view.change(writer=>{
+                writer.setStyle('height', edit_h +"px" , this.editing.view.document.getRoot());
+            });
+
+          }
+
+          calc_editor_size.bind(editor)();
+
 
             this.appEvents.on("composer:resized", editor, function(){
-              debounce(this, function(){
-                var bla = $(".b-editor-textarea-wrapper").innerHeight()
-                var sib_height = 0;
-                $(".ck-editor__main").siblings().each(function ()
-                {
-                  sib_height += $(this).height();
-
-                });
-                var edit_h= bla- sib_height - 5
-                  this.editing.view.change(writer=>{
-                      writer.setStyle('height', edit_h +"px" , this.editing.view.document.getRoot());
-                  });
-              }, 30);
+              debounce(this, calc_editor_size, 30);
 
             });
             editor.setData(this.value)
