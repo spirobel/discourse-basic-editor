@@ -51,12 +51,9 @@ export default Ember.Component.extend({
               }, 30);
 
             });
-            console.log( editor );
             editor.setData(this.value)
             this._updatePreview();
             editor.model.document.on( 'change:data', function() {
-                console.log(editor.getData());
-                console.log(this.validation)
                 this.set('value', editor.getData());
 
                 // Debouncing in test mode is complicated
@@ -69,7 +66,10 @@ export default Ember.Component.extend({
 
 
             }.bind(this) );
-
+            // Focus on the body unless we have a title
+            if (!this.get("composer.canEditTitle")) {
+              editor.editing.view.focus()
+            }
 
 
         }.bind(this) )
