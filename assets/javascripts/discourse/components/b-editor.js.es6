@@ -32,7 +32,33 @@ export default Ember.Component.extend({
  },
   didInsertElement() {
   loadScript("/plugins/DiscourseBasicEditor/ckeditor.js").then(() => {
-    ClassicEditor.create( document.querySelector( '#editor' ))
+    ClassicEditor.create( document.querySelector( '#editor' ), {
+      toolbar:  [
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          'link',
+          'bulletedList',
+          'numberedList',
+          '|',
+          'indent',
+          'outdent',
+          '|',
+          'blockQuote',
+          'insertTable',
+          'undo',
+          'redo'
+        ]
+      ,
+      table: {
+        contentToolbar: [
+          'tableColumn',
+          'tableRow',
+          'mergeTableCells'
+        ]
+      }
+      })
         .then( function(editor){
     function calc_editor_size() {
           var bla = $(".b-editor-textarea-wrapper").innerHeight()
