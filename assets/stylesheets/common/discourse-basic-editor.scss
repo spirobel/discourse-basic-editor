@@ -6,3 +6,38 @@
 .b-editor-max{
   width: 100%;
 }
+
+/* Element | http://0.0.0.0:9292/ */
+
+.b-editor-textarea-wrapper {
+  /* display: flex\\; */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Element | http://0.0.0.0:9292/ */
+
+.ck-editor__main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* Element | htt.ck.ck-editorp://0.0.0.0:9292/ */
+
+#editor_container {
+ display: flex;
+ flex-direction: column;
+ height: 100%;
+}
+
+
+
+
+/* Inline #18 | http://0.0.0.0:9292/ */
+
+.ck.ck-editor__editable_inline {
+  height: 100%;
+  flex: 1 1 auto;
+}

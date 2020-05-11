@@ -76,14 +76,14 @@ export default Ember.Component.extend({
               });
 
             }
-
-            calc_editor_size.bind(editor)();
+            editor.ui.view.element.id = "editor_container"
+        /*    calc_editor_size.bind(editor)();
 
 
               this.appEvents.on("composer:resized", editor, function(){
                 debounce(this, calc_editor_size, 30);
 
-              });
+              });*/
               editor.setData(this.value)
               this._updatePreview();
               editor.model.document.on( 'change:data', function() {
