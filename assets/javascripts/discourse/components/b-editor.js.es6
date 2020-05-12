@@ -60,30 +60,9 @@ export default Ember.Component.extend({
         }
         })
           .then( function(editor){
-      function calc_editor_size() {
-            var bla = $(".b-editor-textarea-wrapper").innerHeight()
-            var sib_height = 0;
-            $(".ck-editor__main").siblings().each(function ()
-            {
-              sib_height += $(this).height();
 
-            });
-
-            var edit_h= bla- sib_height - 5
-
-              this.editing.view.change(writer=>{
-                  writer.setStyle('height', edit_h +"px" , this.editing.view.document.getRoot());
-              });
-
-            }
             editor.ui.view.element.id = "editor_container"
-        /*    calc_editor_size.bind(editor)();
 
-
-              this.appEvents.on("composer:resized", editor, function(){
-                debounce(this, calc_editor_size, 30);
-
-              });*/
               editor.setData(this.value)
               this._updatePreview();
               editor.model.document.on( 'change:data', function() {
