@@ -1,6 +1,37 @@
 .discourse-basic-editor {
 }
-.b-editor-fifty{
-  display: none;
-  visibility: hidden;
+/* Element | http://0.0.0.0:9292/ */
+
+.b-editor-textarea-wrapper {
+  /* display: flex\\; */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Element | http://0.0.0.0:9292/ */
+
+.ck-editor__main {
+  display: flex;
+  flex-direction: column;
+   flex: 1 1 auto;
+   overflow: hidden;
+   height: 0px;
+}
+
+/* Element | htt.ck.ck-editorp://0.0.0.0:9292/ */
+
+#editor_container {
+ display: flex;
+ flex-direction: column;
+   flex: 1 1 auto;
+}
+
+
+
+
+/* Inline #18 | http://0.0.0.0:9292/ */
+
+.ck.ck-editor__editable_inline {
+
+  flex: 1 1 auto;
 }
