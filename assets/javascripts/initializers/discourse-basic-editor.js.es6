@@ -28,7 +28,8 @@ function initializeDiscourseBasicEditor(api) {
     @on("didInsertElement")
       _composerEditorInit() {
         if(!this.element){return;}
-//Ember.run.later(this, (function() {
+        console.log(this.element)
+Ember.run.later(this, (function() {
         if(!this.advancedEditor){
           const $input = $(this.element.querySelector(".ck-editor__editable_inline"));
           const $preview = $(this.element.querySelector(".d-editor-preview-wrapper"));
@@ -80,7 +81,7 @@ function initializeDiscourseBasicEditor(api) {
         this._bindUploadTarget();
         this.appEvents.trigger("composer:will-open");
       }
-//    }), 50);
+    }), 50);
 
       },
   });
