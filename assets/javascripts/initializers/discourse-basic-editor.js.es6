@@ -6,10 +6,30 @@ import ComposerEditor from "discourse/components/composer-editor";
 import putCursorAtEnd from "discourse/lib/put-cursor-at-end";
 import { debounce, later, next, schedule, throttle } from "@ember/runloop";
 import { findRawTemplate } from "discourse/lib/raw-templates";
+import { onToolbarCreate } from 'discourse/components/d-editor';
+import { getOwner } from 'discourse-common/lib/get-owner';
+
 function initializeDiscourseBasicEditor(api) {
   // https://github.com/discourse/discourse/blob/master/app/assets/javascripts/discourse/lib/plugin-api.js.es6
   loadScript("/plugins/DiscourseBasicEditor/ckeditor.js")
 
+
+
+  api.onToolbarCreate(toolbar => {
+      toolbar.addButton({
+        id: "bla",
+        icon: "bla",
+                  group: "extras",
+        perform: function(e) {
+
+          const composerEditor = getOwner(this).lookup('component:composer-editor');
+          const composer = getOwner(this).lookup('controller:composer');
+          composer.set('advancedEditor',false)
+          composerEditor.set('advancedEditor', false)
+          console.log(getOwner(this))
+          console.log("bla",composerEditor)},
+      });
+  });
   api.modifyClass("controller:composer", {
     @on("init")
     _setupPreview() {
