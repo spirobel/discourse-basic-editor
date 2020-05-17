@@ -28,7 +28,6 @@ function initializeDiscourseBasicEditor(api) {
     @on("didInsertElement")
       _composerEditorInit() {
         if(!this.element){return;}
-        console.log(this.element)
 Ember.run.later(this, (function() {
         if(!this.advancedEditor){
           const $input = $(this.element.querySelector(".ck-editor__editable_inline"));
