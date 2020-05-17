@@ -49,7 +49,7 @@ export default Ember.Component.extend({
             'insertTable',
             'undo',
             'redo',
-            'testlabel'
+            'Advanced Editor'
           ]
         ,
         table: {
@@ -61,11 +61,12 @@ export default Ember.Component.extend({
         },
         toolbarItems: [
         	{
-        		label: 'testlabel',
-        		icon: '<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6.999 2H15a1 1 0 0 1 0 2h-1.004v13a1 1 0 1 1-2 0V4H8.999v13a1 1 0 1 1-2 0v-7A4 4 0 0 1 3 6a4 4 0 0 1 3.999-4z"/></svg>',
+        		label: 'Advanced Editor',
+        		icon: '<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7.3 17.37l-.061.088a1.518 1.518 0 0 1-.934.535l-4.178.663-.806-4.153a1.495 1.495 0 0 1 .187-1.058l.056-.086L8.77 2.639c.958-1.351 2.803-1.076 4.296-.03 1.497 1.047 2.387 2.693 1.433 4.055L7.3 17.37zM9.14 4.728l-5.545 8.346 3.277 2.294 5.544-8.346L9.14 4.728zM6.07 16.512l-3.276-2.295.53 2.73 2.746-.435zM9.994 3.506L13.271 5.8c.316-.452-.16-1.333-1.065-1.966-.905-.634-1.895-.78-2.212-.328zM8 18.5L9.375 17H19v1.5H8z"/></svg>',
         		onClick: function() {
-        		console.log("blah onClick")
-        		}
+        		console.log("blah onClick", this)
+            this.set('advancedEditor', true)
+          }.bind(this)
         	},
         ]
         })
