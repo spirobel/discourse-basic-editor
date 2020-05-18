@@ -9,7 +9,7 @@
 register_asset 'stylesheets/common/discourse-basic-editor.scss'
 register_asset 'stylesheets/desktop/discourse-basic-editor.scss', :desktop
 register_asset 'stylesheets/mobile/discourse-basic-editor.scss', :mobile
-
+register_svg_icon "cat" if respond_to?(:register_svg_icon)
 enabled_site_setting :discourse_basic_editor_enabled
 
 PLUGIN_NAME ||= 'DiscourseBasicEditor'

@@ -17,17 +17,13 @@ function initializeDiscourseBasicEditor(api) {
 
   api.onToolbarCreate(toolbar => {
       toolbar.addButton({
-        id: "bla",
-        icon: "bla",
+        id: "basic_editor",
+        icon: "cat",
                   group: "extras",
         perform: function(e) {
-
-          const composerEditor = getOwner(this).lookup('component:composer-editor');
           const composer = getOwner(this).lookup('controller:composer');
           composer.set('advancedEditor',false)
-          composerEditor.set('advancedEditor', false)
-          console.log(getOwner(this))
-          console.log("bla",composerEditor)},
+        }
       });
   });
   api.modifyClass("controller:composer", {

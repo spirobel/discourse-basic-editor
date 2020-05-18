@@ -1,3 +1,4 @@
 en:
   js:
-    discourse_basic_editor:
+    composer:
+      basic_editor_title: "basic editor"
