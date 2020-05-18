@@ -190,10 +190,12 @@
           </div>
 
           {{#if site.mobileView}}
+          {{#if advancedEditor}}
             {{#if allowUpload}}
               <a class="btn btn-default no-text mobile-file-upload {{if isUploading "hidden"}}">
                 {{d-icon uploadIcon}}
               </a>
+            {{/if}}
             {{/if}}
 
             <a href class="btn btn-default no-text mobile-preview" title={{i18n "composer.show_preview"}} {{action "togglePreview"}}>
