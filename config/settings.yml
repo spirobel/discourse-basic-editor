@@ -2,3 +2,9 @@ plugins:
   discourse_basic_editor_enabled:
     default: true
     client: true
+  bla:
+    client: true
+    type: list
+    default:
+      - sd
+      - sdf 

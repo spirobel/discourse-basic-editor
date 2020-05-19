@@ -17,5 +17,10 @@ PLUGIN_NAME ||= 'DiscourseBasicEditor'
 load File.expand_path('lib/discourse-basic-editor/engine.rb', __dir__)
 
 after_initialize do
+
   # https://github.com/discourse/discourse/blob/master/lib/plugin/instance.rb
+#SiteSetting.bla = ["blub", "bla"]
+ SiteSetting.public_send("bla=",["blub", "bla"]) if SiteSetting.respond_to? "bla="
+  puts SiteSetting.bla.inspect
+  #puts SiteSetting.methods
 end
