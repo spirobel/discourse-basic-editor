@@ -17,10 +17,24 @@ PLUGIN_NAME ||= 'DiscourseBasicEditor'
 load File.expand_path('lib/discourse-basic-editor/engine.rb', __dir__)
 
 after_initialize do
+  [
+    "basic_editor",
+  ].each do |key|
+    Site.preloaded_category_custom_fields << key if Site.respond_to? :preloaded_category_custom_fields
+    add_to_serializer(:basic_category, key.to_sym) { object.send(key) }
+  end
+  class ::Category
+    def basic_editor
+      for x in SiteSetting.basic_editors do
+        if x.nil?
+          next
+        end
+        if SiteSetting.public_send(x+"_category") == self.name
+           return x
+        end
+      end
+      return ""
+    end
+  end
 
-  # https://github.com/discourse/discourse/blob/master/lib/plugin/instance.rb
-#SiteSetting.bla = ["blub", "bla"]
- SiteSetting.public_send("bla=",["blub", "bla"]) if SiteSetting.respond_to? "bla="
-  puts SiteSetting.bla.inspect
-  #puts SiteSetting.methods
 end

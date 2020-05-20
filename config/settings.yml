@@ -2,9 +2,7 @@ plugins:
   discourse_basic_editor_enabled:
     default: true
     client: true
-  bla:
-    client: true
+  basic_editors:
     type: list
     default:
-      - sd
-      - sdf 
+      - 
