@@ -36,5 +36,41 @@ after_initialize do
       return ""
     end
   end
+  class ::PostValidator
+    def validate(record)
+      puts record.inspect
+      return
 
+      presence(record)
+      return if record.acting_user.try(:staged?)
+      return if record.acting_user.try(:admin?) && Discourse.static_doc_topic_ids.include?(record.topic_id)
+
+      post_body_validator(record)
+      max_posts_validator(record)
+      max_mention_validator(record)
+      max_images_validator(record)
+      max_attachments_validator(record)
+      can_post_links_validator(record)
+      unique_post_validator(record)
+      force_edit_last_validator(record)
+    end
+  end
+  class ::TopicCreator
+    def valid?
+
+      topic = Topic.new(setup_topic_params)
+      return true
+      # validate? will clear the error hash
+      # so we fire the validation event after
+      # this allows us to add errors
+      valid = topic.valid?
+
+      DiscourseEvent.trigger(:after_validate_topic, topic, self)
+      valid &&= topic.errors.empty?
+
+      add_errors_from(topic) unless valid
+
+      valid
+    end
+  end
 end
