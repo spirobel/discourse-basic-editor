@@ -1,3 +1,6 @@
+{{composer.category.basic_editor}}
+
+{{#unless (get siteSettings (concat composer.category.basic_editor "_full_editor"))}}
 {{#unless advancedEditor}}
 {{b-editor
   tabindex="4"
@@ -46,4 +49,5 @@
   {{#if site.mobileView}}
     <input type="file" id="mobile-uploader" multiple>
   {{/if}}
+{{/unless}}
 {{/unless}}
