@@ -1,6 +1,7 @@
 {{composer.category.basic_editor}}
 
-{{#unless (get siteSettings (concat composer.category.basic_editor "_full_editor"))}}
+
+{{#unless (and (get siteSettings (concat composer.category.basic_editor "_full_editor")) composer.topicFirstPost)}}
 {{#unless advancedEditor}}
 {{b-editor
   tabindex="4"
