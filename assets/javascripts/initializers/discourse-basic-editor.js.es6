@@ -36,6 +36,48 @@ function initializeDiscourseBasicEditor(api) {
     },
   });
 
+
+api.modifyClass("model:composer",{
+  @observes("categoryId")
+  catIdChanged() {
+    // if this.category this.category.basic_editor
+console.log(this)
+},
+@discourseComputed(
+    "loading",
+    "canEditTitle",
+    "titleLength",
+    "targetRecipients",
+    "targetRecipientsArray",
+    "replyLength",
+    "categoryId",
+    "missingReplyCharacters",
+    "tags",
+    "topicFirstPost",
+    "minimumRequiredTags",
+    "isStaffUser"
+  )
+  cantSubmitPost(
+    loading,
+    canEditTitle,
+    titleLength,
+    targetRecipients,
+    targetRecipientsArray,
+    replyLength,
+    categoryId,
+    missingReplyCharacters,
+    tags,
+    topicFirstPost,
+    minimumRequiredTags,
+    isStaffUser
+   ) {
+      if(!this.category) {return this._super()}
+       let b = this.category.basic_editor
+       if (topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"])
+        { return false;}
+       return this._super();
+     },
+})
   api.modifyClass("component:composer-editor", {
     @observes("advancedEditor")
       _redrawComposerChange(){
