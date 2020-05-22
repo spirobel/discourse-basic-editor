@@ -35,31 +35,13 @@ export default Ember.Component.extend({
     loadScript("/plugins/DiscourseBasicEditor/ckeditor.js").then(() => {
       const component = this;
       ClassicEditor.create( document.querySelector( '#editor' ), {
-        toolbar:  [
-            'heading',
-            '|',
-            'bold',
-            'italic',
-            'link',
-            'bulletedList',
-            'numberedList',
-            '|',
-            'indent',
-            'outdent',
-            '|',
-            'blockQuote',
-            'insertTable',
-            'undo',
-            'redo',
-            'Advanced Editor'
-          ]
-        ,
-        table: {
-          contentToolbar: [
-            'tableColumn',
-            'tableRow',
-            'mergeTableCells'
-          ]
+        disUploader:{
+          abort: function(){
+          	console.log("abort from the outside", this)
+          },
+          upload: function(){
+            console.log("upload from the outside", this)  
+          },
         },
         toolbarItems: [
         	{
