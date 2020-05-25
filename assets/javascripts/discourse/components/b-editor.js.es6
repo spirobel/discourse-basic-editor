@@ -36,11 +36,11 @@ export default Ember.Component.extend({
       const component = this;
       ClassicEditor.create( document.querySelector( '#editor' ), {
         disUploader:{
-          abort: function(){
+          abort: function(abo){
           	console.log("abort from the outside", this)
           },
-          upload: function(){
-            console.log("upload from the outside", this)  
+          upload: function(resolve, reject, file, abo){
+            console.log("upload from the outside", this, file, abo)
           },
         },
         toolbarItems: [
