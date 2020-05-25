@@ -45,7 +45,7 @@ export default Ember.Component.extend({
             data.append("type", "composer")
             const isPrivateMessage = this.get("composer.privateMessage");
             if (isPrivateMessage) data.append("for_private_message", true)
-            data.append( "files[]", file , "filename.jpg");
+            data.append( "files[]", file );
 
             return ajax(Discourse.getURL(`/uploads.json?client_id=${this.messageBus.clientId}`), {
               type: "POST",
