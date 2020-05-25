@@ -1,6 +1,7 @@
 import loadScript from "discourse/lib/load-script";
 import { getOwner } from 'discourse-common/lib/get-owner';
 import { cookAsync } from "discourse/lib/text";
+import { ajax } from "discourse/lib/ajax";
 import { debounce, later, next, schedule, scheduleOnce } from "@ember/runloop";
 import ENV from "discourse-common/config/environment";
 export default Ember.Component.extend({
@@ -38,10 +39,55 @@ export default Ember.Component.extend({
         disUploader:{
           abort: function(abo){
           	console.log("abort from the outside", this)
-          },
-          upload: function(resolve, reject, file, abo){
-            console.log("upload from the outside", this, file, abo)
-          },
+          }.bind(this),
+          upload: function(file, abo){
+            const data = new FormData();
+            data.append("type", "composer")
+            const isPrivateMessage = this.get("composer.privateMessage");
+            if (isPrivateMessage) data.append("for_private_message", true)
+            data.append( "files[]", file , "filename.jpg");
+
+            return ajax(Discourse.getURL(`/uploads.json?client_id=${this.messageBus.clientId}`), {
+              type: "POST",
+              data: data,
+                    contentType: false,
+              processData: false,
+              dataType: "json"
+            }).then(response => {
+
+              return new Promise( ( resolve, reject ) => {
+                //  const response = xhr.response;
+                if ( !response || response.error ) {
+                  return reject( response && response.error ? response.error.message : "error uploading the file" );
+                }
+                resolve( {
+                  default: response.url
+                } );
+
+              } )
+
+
+
+
+}, reason => {
+
+    console.log("ajaxerro",reason)
+});
+
+
+/*        const loader = abo.loader;
+                      if ( xhr.upload ) {
+                        xhr.upload.addEventListener( 'progress', evt => {
+                          if ( evt.lengthComputable ) {
+                            loader.uploadTotal = evt.total;
+                            loader.uploaded = evt.loaded;
+                          }
+                        } );
+                      }*/
+
+
+
+          }.bind(this),
         },
         toolbarItems: [
         	{
