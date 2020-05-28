@@ -55,22 +55,4 @@ after_initialize do
       force_edit_last_validator(record)
     end
   end
-  class ::TopicCreator
-    def valid?
-
-      topic = Topic.new(setup_topic_params)
-      return true
-      # validate? will clear the error hash
-      # so we fire the validation event after
-      # this allows us to add errors
-      valid = topic.valid?
-
-      DiscourseEvent.trigger(:after_validate_topic, topic, self)
-      valid &&= topic.errors.empty?
-
-      add_errors_from(topic) unless valid
-
-      valid
-    end
-  end
 end
