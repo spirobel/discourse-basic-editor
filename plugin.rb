@@ -19,6 +19,7 @@ load File.expand_path('lib/discourse-basic-editor/engine.rb', __dir__)
 after_initialize do
   [
     "basic_editor",
+    "full_editor"
   ].each do |key|
     Site.preloaded_category_custom_fields << key if Site.respond_to? :preloaded_category_custom_fields
     add_to_serializer(:basic_category, key.to_sym) { object.send(key) }
@@ -35,16 +36,22 @@ after_initialize do
       end
       return ""
     end
+    def full_editor
+      begin
+        return SiteSetting.public_send(self.basic_editor + "_full_editor")
+      rescue NoMethodError
+        return false
+      end
+    end
   end
+
   class ::PostValidator
     def validate(record)
-      puts record.inspect
-      return
-
       presence(record)
       return if record.acting_user.try(:staged?)
       return if record.acting_user.try(:admin?) && Discourse.static_doc_topic_ids.include?(record.topic_id)
-
+      return if record.topic_id.nil?
+      return if record.topic.category.full_editor && record.is_first_post?
       post_body_validator(record)
       max_posts_validator(record)
       max_mention_validator(record)
@@ -52,7 +59,7 @@ after_initialize do
       max_attachments_validator(record)
       can_post_links_validator(record)
       unique_post_validator(record)
-      force_edit_last_validator(record)
+      force_edit_last_validator(record) 
     end
   end
 end
