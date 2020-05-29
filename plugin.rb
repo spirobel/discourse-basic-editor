@@ -44,22 +44,16 @@ after_initialize do
       end
     end
   end
-
-  class ::PostValidator
+  module SkipPostValidationsOnEditorReplacement
     def validate(record)
       presence(record)
-      return if record.acting_user.try(:staged?)
-      return if record.acting_user.try(:admin?) && Discourse.static_doc_topic_ids.include?(record.topic_id)
       return if record.topic_id.nil?
       return if record.topic.category.full_editor && record.is_first_post?
-      post_body_validator(record)
-      max_posts_validator(record)
-      max_mention_validator(record)
-      max_images_validator(record)
-      max_attachments_validator(record)
-      can_post_links_validator(record)
-      unique_post_validator(record)
-      force_edit_last_validator(record) 
+      super(record)
     end
+  end
+
+  class ::PostValidator
+    prepend SkipPostValidationsOnEditorReplacement
   end
 end
