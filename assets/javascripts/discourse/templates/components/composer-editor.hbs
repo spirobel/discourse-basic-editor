@@ -1,6 +1,3 @@
-{{composer.category.basic_editor}}
-
-
 {{#unless (and (get siteSettings (concat composer.category.basic_editor "_full_editor")) composer.topicFirstPost)}}
 {{#unless advancedEditor}}
 {{b-editor
@@ -53,3 +50,6 @@
   {{/if}}
 {{/unless}}
 {{/unless}}
+{{#if (and (get siteSettings (concat composer.category.basic_editor "_full_editor")) composer.topicFirstPost)}}
+{{component composer.category.basic_editor}}
+{{/if}}
