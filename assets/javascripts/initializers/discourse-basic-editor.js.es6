@@ -41,7 +41,14 @@ api.modifyClass("model:composer",{
   @observes("categoryId")
   catIdChanged() {
     // if this.category this.category.basic_editor
-console.log(this)
+    if(!this.category) {return;}
+     let b = this.category.basic_editor
+     if (this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"])
+      {
+      if(this["setup_" + b])
+        {this["setup_" + b]();}
+        console.log(this)
+      }
 },
 @discourseComputed(
     "loading",

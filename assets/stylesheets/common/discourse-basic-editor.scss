@@ -40,3 +40,18 @@
    height: 0px;
   flex: 1 1 auto;
 }
+//full_editor
+
+/* Element | http://0.0.0.0:9292/ */
+
+.full_editor {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  & > div {
+    flex-grow: 1;
+    display: flex;
+  }
+}
+
+/* Element | http://0.0.0.0:9292/ */
