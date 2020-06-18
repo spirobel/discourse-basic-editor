@@ -203,10 +203,20 @@
             </a>
 
             {{#if showPreview}}
+            {{#unless (and (get siteSettings (concat model.category.basic_editor "_replace_preview")) model.topicFirstPost)}}
+
               {{d-button action=(action "togglePreview") class="hide-preview" label="composer.hide_preview"}}
+              {{else}}
+                {{component (concat model.category.basic_editor "_preview") composer=model }}
+              {{/unless}}
             {{/if}}
           {{else}}
+          {{#unless (and (get siteSettings (concat model.category.basic_editor "_replace_preview")) model.topicFirstPost)}}
+
             <a href {{action "togglePreview"}} class="toggle-preview">{{html-safe toggleText}}</a>
+            {{else}}
+              {{component (concat model.category.basic_editor "_preview") composer=model }}
+            {{/unless}}
           {{/if}}
 
         </div>

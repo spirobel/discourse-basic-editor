@@ -19,7 +19,8 @@ load File.expand_path('lib/discourse-basic-editor/engine.rb', __dir__)
 after_initialize do
   [
     "basic_editor",
-    "full_editor"
+    "full_editor",
+    "replace_preview"
   ].each do |key|
     Site.preloaded_category_custom_fields << key if Site.respond_to? :preloaded_category_custom_fields
     add_to_serializer(:basic_category, key.to_sym) { object.send(key) }
@@ -39,6 +40,13 @@ after_initialize do
     def full_editor
       begin
         return SiteSetting.public_send(self.basic_editor + "_full_editor")
+      rescue NoMethodError
+        return false
+      end
+    end
+    def replace_preview
+      begin
+        return SiteSetting.public_send(self.basic_editor + "_replace_preview")
       rescue NoMethodError
         return false
       end
