@@ -11,7 +11,8 @@ export default Ember.Component.extend({
     loadScript("/plugins/DiscourseBasicEditor/ckeditor.js").then(() => {
       const component = this;
       ClassicEditor.create( document.querySelector( '#editor' ), {
-        removePlugins: [ 'DiscourseUpload', 'AdvancedEditor', 'Markdown' ],
+        removePlugins: [ 'DiscourseUpload', 'AdvancedEditor'],
+        html: true,
         toolbarItems: [],
         toolbar: {
       		items: [
@@ -32,7 +33,7 @@ export default Ember.Component.extend({
           .then( function(editor){
 
             editor.ui.view.element.id = "editor_container"
-
+            console.log(editor.data.processor)
               editor.setData(this.value)
               editor.model.document.on( 'change:data', function() {
                   this.set('value', editor.getData());
@@ -44,6 +45,7 @@ export default Ember.Component.extend({
               if (!this.get("composer.canEditTitle")) {
                 editor.editing.view.focus()
               }
+
 
 
           }.bind(this) )
