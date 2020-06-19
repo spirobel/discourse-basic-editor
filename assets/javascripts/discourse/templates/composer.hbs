@@ -197,18 +197,16 @@
               </a>
             {{/if}}
             {{/if}}
+            {{#unless (and (get siteSettings (concat model.category.basic_editor "_replace_preview")) model.topicFirstPost)}}
 
             <a href class="btn btn-default no-text mobile-preview" title={{i18n "composer.show_preview"}} {{action "togglePreview"}}>
               {{d-icon "desktop"}}
             </a>
-
+            {{else}}
+            {{component (concat model.category.basic_editor "_preview") composer=model }}
+          {{/unless}}
             {{#if showPreview}}
-            {{#unless (and (get siteSettings (concat model.category.basic_editor "_replace_preview")) model.topicFirstPost)}}
-
               {{d-button action=(action "togglePreview") class="hide-preview" label="composer.hide_preview"}}
-              {{else}}
-                {{component (concat model.category.basic_editor "_preview") composer=model }}
-              {{/unless}}
             {{/if}}
           {{else}}
           {{#unless (and (get siteSettings (concat model.category.basic_editor "_replace_preview")) model.topicFirstPost)}}
