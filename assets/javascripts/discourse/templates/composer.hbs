@@ -203,7 +203,7 @@
               {{d-icon "desktop"}}
             </a>
             {{else}}
-            {{component (concat model.category.basic_editor "_preview") composer=model }}
+            {{component (concat model.category.basic_editor "-preview") composer=model }}
           {{/unless}}
             {{#if showPreview}}
               {{d-button action=(action "togglePreview") class="hide-preview" label="composer.hide_preview"}}
@@ -213,7 +213,7 @@
 
             <a href {{action "togglePreview"}} class="toggle-preview">{{html-safe toggleText}}</a>
             {{else}}
-              {{component (concat model.category.basic_editor "_preview") composer=model }}
+              {{component (concat model.category.basic_editor "-preview") composer=model }}
             {{/unless}}
           {{/if}}
 
