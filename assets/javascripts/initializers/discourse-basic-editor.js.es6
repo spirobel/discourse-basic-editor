@@ -34,6 +34,12 @@ function initializeDiscourseBasicEditor(api) {
       : this.keyValueStore.get("composer.showPreview") || false;
       this.set("showPreview", val === "true");
     },
+    @observes("model.category.replace_preview")
+    deactivatePreview() {
+      if( this.model || this.model.category || this.model.category.replace_preview ){
+       this.set("showPreview", false);
+     }
+    },
   });
 
 
