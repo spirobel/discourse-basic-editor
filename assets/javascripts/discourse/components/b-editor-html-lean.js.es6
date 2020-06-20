@@ -33,11 +33,9 @@ export default Ember.Component.extend({
           .then( function(editor){
 
             editor.ui.view.element.id = "editor_container"
-            console.log(editor.data.processor)
               editor.setData(this.value)
               editor.model.document.on( 'change:data', function() {
                   this.set('value', editor.getData());
-                  console.log(this.value);
 
 
               }.bind(this) );

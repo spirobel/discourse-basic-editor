@@ -53,7 +53,6 @@ api.modifyClass("model:composer",{
       {
       if(this["setup_" + b])
         {this["setup_" + b]();}
-        console.log(this)
       }
 },
 @discourseComputed(
