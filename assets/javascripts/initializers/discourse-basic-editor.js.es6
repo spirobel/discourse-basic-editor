@@ -36,6 +36,7 @@ function initializeDiscourseBasicEditor(api) {
     },
     @observes("model.category.replace_preview")
     deactivatePreview() {
+      if (this.model == null) return;
       if( this.model || this.model.category || this.model.category.replace_preview ){
        this.set("showPreview", false);
      }
