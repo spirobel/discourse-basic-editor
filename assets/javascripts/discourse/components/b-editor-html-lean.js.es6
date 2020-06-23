@@ -2,6 +2,7 @@ import loadScript from "discourse/lib/load-script";
 import { getOwner } from 'discourse-common/lib/get-owner';
 import { cookAsync } from "discourse/lib/text";
 import { ajax } from "discourse/lib/ajax";
+import discourseComputed, {  observes,  on } from "discourse-common/utils/decorators";
 import { debounce, later, next, schedule, scheduleOnce } from "@ember/runloop";
 import ENV from "discourse-common/config/environment";
 export default Ember.Component.extend({
@@ -31,7 +32,7 @@ export default Ember.Component.extend({
       	},
         })
           .then( function(editor){
-
+            this.set("ckeditor", editor)
             editor.ui.view.element.id = "editor_container"
               editor.setData(this.value)
               editor.model.document.on( 'change:data', function() {
@@ -52,7 +53,15 @@ export default Ember.Component.extend({
           });
        });
   },
-
+  @observes("reset")
+  resetEditor(){
+    if(!this.reset) return;
+     Ember.run.once(this, function(){
+       this.set("reset", false)
+       if(!this.ckeditor) return;
+       this.ckeditor.setData(this.value)
+     })
+  },
   didInsertElement() {
     this.setupBasicEditor();
    }
