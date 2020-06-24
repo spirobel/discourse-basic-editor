@@ -42,9 +42,46 @@ function initializeDiscourseBasicEditor(api) {
      }
     },
   });
-
-
+  //TODO this needs to be amended to work with arrays of setup and save functions so that
+  //we can compose multiple plugins
+  //CREATE
+api.onAppEvent('topic:created', function(createdPost,composer){
+    if(!composer.category ){return;}
+    let b = composer.category.basic_editor
+    if (composer.topicFirstPost && b != "" && composer.siteSettings[b +  "_full_editor"]){
+      if(composer["save_" + b])
+        {composer["save_" + b](createdPost.topic_id).then(function(result){
+          this.refreshCategoryTopic(result)
+        }.bind(composer));}
+    }
+});
+//UPDATE
+//also:this.action: "edit" and this.topic.id
+//topic.currentPost: 1
+ api.composerBeforeSave(function() {
+   if(!this.category ){return Promise.resolve();}
+   let b = composer.category.basic_editor
+   if (this.action == 'edit' && this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"]) {
+     if(this["save_" + b])
+       { return this["save_" + b](this.topic.id).then(function(result){
+         this.refreshCategoryTopic(result)
+       }.bind(this));}
+    }
+    return Promise.resolve();
+ });
 api.modifyClass("model:composer",{
+  refreshCategoryTopic(result){
+    //refresh topic
+    result.target.appEvents.trigger("post-stream:refresh", {
+      id: parseInt(result.responseJson.id, 10)
+    });
+    //refresh category
+    Category.reloadById(this.categoryId).then(atts => {
+        const model = this.store.createRecord("category", atts.category);
+        model.setupGroupsAndPermissions();
+        this.site.updateCategory(model);
+      });
+ },
   @observes("categoryId")
   catIdChanged() {
     // if this.category this.category.basic_editor
