@@ -61,7 +61,7 @@ api.onAppEvent('topic:created', function(createdPost,composer){
 //topic.currentPost: 1
  api.composerBeforeSave(function() {
    if(!this.category ){return Promise.resolve();}
-   let b = composer.category.basic_editor
+   let b = this.category.basic_editor
    if (this.action == 'edit' && this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"]) {
      if(this["save_" + b])
        { return this["save_" + b](this.topic.id).then(function(result){
