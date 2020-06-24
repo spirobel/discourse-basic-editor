@@ -8,6 +8,7 @@ import { debounce, later, next, schedule, throttle } from "@ember/runloop";
 import { findRawTemplate } from "discourse/lib/raw-templates";
 import { onToolbarCreate } from 'discourse/components/d-editor';
 import { getOwner } from 'discourse-common/lib/get-owner';
+import { once } from "@ember/runloop";
 
 function initializeDiscourseBasicEditor(api) {
   // https://github.com/discourse/discourse/blob/master/app/assets/javascripts/discourse/lib/plugin-api.js.es6
@@ -90,7 +91,7 @@ api.modifyClass("model:composer",{
      if (this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"])
       {
       if(this["setup_" + b])
-        {this["setup_" + b]();}
+        {once(this,"setup_" + b)}
       }
 },
 @discourseComputed(
