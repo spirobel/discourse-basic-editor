@@ -9,6 +9,7 @@ import { findRawTemplate } from "discourse/lib/raw-templates";
 import { onToolbarCreate } from 'discourse/components/d-editor';
 import { getOwner } from 'discourse-common/lib/get-owner';
 import { once } from "@ember/runloop";
+import Category from "discourse/models/category";
 
 function initializeDiscourseBasicEditor(api) {
   // https://github.com/discourse/discourse/blob/master/app/assets/javascripts/discourse/lib/plugin-api.js.es6
