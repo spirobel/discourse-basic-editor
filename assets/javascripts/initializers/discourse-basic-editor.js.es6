@@ -52,7 +52,7 @@ api.onAppEvent('topic:created', function(createdPost,composer){
     if (composer.topicFirstPost && b != "" && composer.siteSettings[b +  "_full_editor"]){
       if(composer["save_" + b])
         {composer["save_" + b](createdPost.topic_id).then(function(result){
-          this.refreshCategoryTopic(result)
+          return this.refreshCategoryTopic(result)
         }.bind(composer));}
     }
 });
@@ -65,7 +65,7 @@ api.onAppEvent('topic:created', function(createdPost,composer){
    if (this.action == 'edit' && this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"]) {
      if(this["save_" + b])
        { return this["save_" + b](this.topic.id).then(function(result){
-         this.refreshCategoryTopic(result)
+         return this.refreshCategoryTopic(result)
        }.bind(this));}
     }
     return Promise.resolve();
@@ -82,6 +82,7 @@ api.modifyClass("model:composer",{
         model.setupGroupsAndPermissions();
         this.site.updateCategory(model);
       });
+      return Promise.resolve();
  },
   @observes("categoryId")
   catIdChanged() {
