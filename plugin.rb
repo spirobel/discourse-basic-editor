@@ -64,4 +64,19 @@ after_initialize do
   class ::PostValidator
     prepend SkipPostValidationsOnEditorReplacement
   end
+  module OverridePostCook
+    def cook(raw, opts = {})
+      t = Topic.find(opts[:topic_id])
+      if t.category.basic_editor != ""
+        c =(t.category.basic_editor + "_creator").tableize.classify.constantize
+        jraw = if raw != "" then JSON.parse(raw) else "" end
+        creator = c.new(jraw, opts)
+        return creator.create
+      end
+      return super
+    end
+  end
+  Post.class_eval do
+    prepend OverridePostCook
+  end
 end
