@@ -54,7 +54,7 @@ function initializeDiscourseBasicEditor(api) {
    if (this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"]) {
      if(this["save_" + b])
        { return this["save_" + b]().then(function(result){
-         this.set("reply", JSON.stringify(Object.assign({}, this.topic.meaning)));
+         this.set("reply", JSON.stringify(Object.assign({}, result)));
          return Promise.resolve()
        }.bind(this));}
     }
@@ -69,7 +69,16 @@ api.modifyClass("model:composer",{
      if (this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"])
       {
       if(this["setup_" + b])
-        {once(this,"setup_" + b)}
+        {
+          let raw = {}
+          try {
+            raw =  JSON.parse(this.reply)
+          }
+          catch(err) {
+            raw = {}
+          }
+          once(this,"setup_" + b,raw)
+        }
       }
 },
 @discourseComputed(
