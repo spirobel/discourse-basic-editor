@@ -61,18 +61,17 @@ function initializeDiscourseBasicEditor(api) {
     return Promise.resolve();
  });
 api.modifyClass("model:composer",{
-  @observes("categoryId")
-  catIdChanged() {
+  callSetup(){
     // if this.category this.category.basic_editor
-    if(!this.category) {return;}
+    if(!this.category ) {return;}
      let b = this.category.basic_editor
-     if (this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"])
+     if (this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"] )
       {
       if(this["setup_" + b])
         {
           let raw = {}
           try {
-            raw =  JSON.parse(this.reply)
+            raw =  JSON.parse(this.post.raw)
           }
           catch(err) {
             raw = {}
@@ -80,6 +79,20 @@ api.modifyClass("model:composer",{
           once(this,"setup_" + b,raw)
         }
       }
+  },
+  @observes('loading')
+  composeinit(){
+    console.log(this.loading)
+    if(this.loading != false) return;
+    console.log("init", this)
+      this.callSetup()
+  },
+  @observes("categoryId")
+  catIdChanged() {
+    if(this.loading != false) return;
+    console.log("catIdChanged", this)
+
+    this.callSetup()
 },
 @discourseComputed(
     "loading",
