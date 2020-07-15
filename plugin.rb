@@ -68,6 +68,7 @@ after_initialize do
     def cook(raw, opts = {})
       t = Topic.find(opts[:topic_id])
       if t.category.basic_editor != ""
+        return super unless self.is_first_post?
         c =(t.category.basic_editor + "_creator").tableize.classify.constantize
         jraw = if raw != "" then JSON.parse(raw) else "" end
         creator = c.new(jraw, opts)
