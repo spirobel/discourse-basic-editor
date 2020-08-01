@@ -1,6 +1,6 @@
 # DiscourseBasicEditor
 
-DiscourseBasicEditor is a plugin for ...
+Hi, I am working on a plugin at the moment that replaces the standard editor with a wysiwg editor. I think its easier for beginner users like myself and others.  Please checkout the thread on meta for more details
 
 ## Installation
 
@@ -13,4 +13,4 @@ as the plugin command.
 ## Feedback
 
 If you have issues or suggestions for the plugin, please bring them up on
-[Discourse Meta](https://meta.discourse.org).
+[Discourse Meta](https://meta.discourse.org/t/discourse-basic-editor-beginner-friendly-composer/159431).
