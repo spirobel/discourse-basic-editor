@@ -47,7 +47,7 @@ export default Ember.Component.extend({
             if (isPrivateMessage) data.append("for_private_message", true)
             data.append( "files[]", file );
 
-            return ajax(Discourse.getURL(`/uploads.json?client_id=${this.messageBus.clientId}`), {
+            return ajax(`/uploads.json?client_id=${this.messageBus.clientId}`, {
               type: "POST",
               data: data,
                     contentType: false,
