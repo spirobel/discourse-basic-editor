@@ -2,6 +2,7 @@ import loadScript from "discourse/lib/load-script";
 import { getOwner } from 'discourse-common/lib/get-owner';
 import { cookAsync } from "discourse/lib/text";
 import { ajax } from "discourse/lib/ajax";
+import getURL from "discourse-common/lib/get-url";
 import { debounce, later, next, schedule, scheduleOnce } from "@ember/runloop";
 import ENV from "discourse-common/config/environment";
 export default Ember.Component.extend({
@@ -47,7 +48,7 @@ export default Ember.Component.extend({
             if (isPrivateMessage) data.append("for_private_message", true)
             data.append( "files[]", file );
 
-            return ajax(`/uploads.json?client_id=${this.messageBus.clientId}`, {
+            return ajax(getURL(`/uploads.json?client_id=${this.messageBus.clientId}`), {
               type: "POST",
               data: data,
                     contentType: false,
