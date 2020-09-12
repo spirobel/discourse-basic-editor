@@ -56,7 +56,7 @@ after_initialize do
     def validate(record)
       presence(record)
       return if record.topic_id.nil?
-      return if record.topic.category.full_editor && record.is_first_post?
+      return if record.topic.category && record.topic.category.full_editor && record.is_first_post?
       super(record)
     end
   end
@@ -67,7 +67,7 @@ after_initialize do
   module OverridePostCook
     def cook(raw, opts = {})
       t = Topic.find(opts[:topic_id])
-      if t.category.basic_editor != ""
+      if t.category && t.category.basic_editor != ""
         return super unless self.is_first_post?
         c =(t.category.basic_editor + "_creator").tableize.classify.constantize
         jraw = if raw != "" then JSON.parse(raw) else "" end
