@@ -5,3 +5,7 @@
   display: none;
   visibility: hidden;
 }
+body {
+	--ck-z-default: 1000;
+	--ck-z-modal: calc( var(--ck-z-default) + 999 );
+}
