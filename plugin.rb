@@ -80,4 +80,21 @@ after_initialize do
   Post.class_eval do
     prepend OverridePostCook
   end
+  class ::TopicQuery
+  def list_topics_array()
+    create_list(:topics)
+  end
+end
+class ::ListController
+  def topics_array
+    list_opts = build_topic_list_options
+    list = TopicQuery.new(current_user, list_opts).send("list_topics_array")
+    respond_with_list(list)
+  end
+end
+Discourse::Application.routes.prepend do
+   scope "/topics" do
+     get "topics_array" => "list#topics_array",as: "topics_array",  defaults: { format: :json }
+   end
+end
 end
