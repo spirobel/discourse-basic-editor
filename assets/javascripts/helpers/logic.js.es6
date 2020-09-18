@@ -2,6 +2,9 @@ import { registerUnbound } from "discourse-common/lib/helpers";
 registerUnbound('and', function () {
   return Array.prototype.slice.call(arguments, 0, arguments.length - 1).every(Boolean);
 });
+registerUnbound('eq', function (v1, v2) {
+  return v1 === v2;
+});
 
 //this doesnt work. if you want one of those make them like and. too lazy to convert all now
 Handlebars.registerHelper({
