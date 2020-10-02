@@ -1,7 +1,7 @@
 {{#if errorHtml}}
   {{html-safe errorHtml}}
 {{else}}
-{{#unless (and siteSettings.basic_editor_replace_home (eq target.currentURL "/")) }}
+{{#unless (and siteSettings.basic_editor_home_component (eq target.currentURL "/")) }}
   <div class="container">
     {{discourse-banner user=currentUser banner=site.banner}}
     {{category-read-only-banner category=category readOnly=navigationCategory.cannotCreateTopicOnCategory}}
