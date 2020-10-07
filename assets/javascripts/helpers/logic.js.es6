@@ -5,6 +5,9 @@ registerUnbound('and', function () {
 registerUnbound('eq', function (v1, v2) {
   return v1 === v2;
 });
+registerUnbound('or', function () {
+  return Array.prototype.slice.call(arguments, 0, arguments.length - 1).some(Boolean);
+});
 
 //this doesnt work. if you want one of those make them like and. too lazy to convert all now
 Handlebars.registerHelper({
