@@ -1,4 +1,4 @@
-{{#unless (and (get siteSettings (concat composer.category.basic_editor "_full_editor")) composer.topicFirstPost)}}
+{{#unless (and composer.category.replace_editor composer.topicFirstPost)}}
 {{#unless advancedEditor}}
 {{b-editor
   tabindex="4"
@@ -50,6 +50,6 @@
   {{/if}}
 {{/unless}}
 {{/unless}}
-{{#if (and (get siteSettings (concat composer.category.basic_editor "_full_editor")) composer.topicFirstPost)}}
-<div class="full_editor">{{component composer.category.basic_editor composer=composer }}</div>
+{{#if (and composer.category.replace_editor composer.topicFirstPost)}}
+<div class="full_editor">{{component composer.category.replace_editor composer=composer }}</div>
 {{/if}}

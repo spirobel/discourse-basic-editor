@@ -50,8 +50,8 @@ function initializeDiscourseBasicEditor(api) {
 //topic.currentPost: 1
  api.composerBeforeSave(function() {
    if(!this.category ){return Promise.resolve();}
-   let b = this.category.basic_editor
-   if (this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"]) {
+   let b = this.category.replace_editor
+   if (this.topicFirstPost && b != "") {
      if(this["save_" + b])
        { return this["save_" + b]().then(function(result){
          this.set("reply", JSON.stringify(Object.assign({}, result)));
@@ -65,8 +65,8 @@ api.modifyClass("model:composer",{
   composeInit() {
     if(this.loading != false || !this.category ) return;
 
-     let b = this.category.basic_editor
-     if (this.topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"] )
+     let b = this.category.replace_editor
+     if (this.topicFirstPost && b != "")
       {
       if(this["setup_" + b])
         {
@@ -110,8 +110,8 @@ api.modifyClass("model:composer",{
     isStaffUser
    ) {
       if(!this.category) {return this._super()}
-       let b = this.category.basic_editor
-       if (topicFirstPost && b != "" && this.siteSettings[b +  "_full_editor"])
+       let b = this.category.replace_editor
+       if (topicFirstPost && b != "")
         { return false;}
        return this._super();
      },

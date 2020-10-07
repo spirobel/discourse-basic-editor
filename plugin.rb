@@ -18,45 +18,40 @@ load File.expand_path('lib/discourse-basic-editor/engine.rb', __dir__)
 
 after_initialize do
   [
-    "basic_editor",
-    "full_editor",
+    "replace_editor",
     "replace_preview"
   ].each do |key|
     Site.preloaded_category_custom_fields << key if Site.respond_to? :preloaded_category_custom_fields
     add_to_serializer(:basic_category, key.to_sym) { object.send(key) }
   end
-  class ::Category
-    def basic_editor
-      for x in SiteSetting.basic_editors do
-        if x.nil?
-          next
-        end
-        if SiteSetting.public_send(x+"_category") == self.name
-           return x
-        end
-      end
-      return ""
-    end
-    def full_editor
-      begin
-        return SiteSetting.public_send(self.basic_editor + "_full_editor")
-      rescue NoMethodError
-        return false
+  Category.register_custom_field_type('replace_editor', :text)
+  Category.register_custom_field_type('replace_preview', :text)
+  module CategoryEditorReplacement
+    def replace_editor
+      if self.custom_fields['replace_editor'] != nil
+        self.custom_fields['replace_editor']
+      else
+        return ""
       end
     end
     def replace_preview
-      begin
-        return SiteSetting.public_send(self.basic_editor + "_replace_preview")
-      rescue NoMethodError
-        return false
+      if self.custom_fields['replace_preview'] != nil
+        self.custom_fields['replace_preview']
+      else
+        return ""
       end
     end
   end
+
+  Category.class_eval do
+    prepend CategoryEditorReplacement
+  end
+
   module SkipPostValidationsOnEditorReplacement
     def validate(record)
       presence(record)
       return if record.topic_id.nil?
-      return if record.topic.category && record.topic.category.full_editor && record.is_first_post?
+      return if record.topic.category && record.topic.category.custom_fields['replace_editor'] && record.is_first_post?
       super(record)
     end
   end
@@ -67,9 +62,9 @@ after_initialize do
   module OverridePostCook
     def cook(raw, opts = {})
       t = Topic.find(opts[:topic_id])
-      if t.category && t.category.basic_editor != ""
+      if t.category && t.category.replace_editor != ""
         return super unless self.is_first_post?
-        c =(t.category.basic_editor + "_creator").tableize.classify.constantize
+        c =(t.category.replace_editor + "_creator").tableize.classify.constantize
         jraw = if raw != "" then JSON.parse(raw) else "" end
         creator = c.new(jraw, opts)
         return creator.create
