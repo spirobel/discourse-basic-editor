@@ -1,4 +1,8 @@
 en:
   js:
     composer:
-      basic_editor_title: "basic editor"
+      basic_editor_title: "Basic editor"
+    category:
+      basic_editor_setting_heading: "basic editor"
+      replace_editor: "custom editor component:"
+      replace_preview: "preview button replace component:"
