@@ -2,7 +2,6 @@ plugins:
   discourse_basic_editor_enabled:
     default: true
     client: true
-  basic_editors:
-    type: list
-    default:
-      - 
+  basic_editor_enable_category_chooser:
+    default: false
+    client: true
