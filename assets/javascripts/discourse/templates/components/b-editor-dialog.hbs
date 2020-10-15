@@ -1,0 +1,10 @@
+
+  <div class="b-editor-dialog b-editor-max">
+    <div class="b-dialog-inner">
+
+    {{popup-input-tip validation=validation}}
+    {{#each dialog as |field|}}
+    {{component field.type field=field }}
+    {{/each}}
+    </div>
+  </div>
