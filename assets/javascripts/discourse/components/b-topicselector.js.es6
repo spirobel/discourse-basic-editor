@@ -1,7 +1,7 @@
 import { isEmpty } from "@ember/utils";
 import { next } from "@ember/runloop";
 import Component from "@ember/component";
-import discourseDebounce from "discourse/lib/debounce";
+import debounce from "discourse/plugins/discourse-basic-editor/lib/debounce";
 import { searchForTerm } from "discourse/lib/search";
 import { observes } from "discourse-common/utils/decorators";
 import discourseComputed from "discourse-common/utils/decorators";
@@ -71,42 +71,48 @@ export default Component.extend({
     this.set("loading", false);
   },
 
-  search: discourseDebounce(function(title) {
-    if (!this.element || this.isDestroying || this.isDestroyed || isEmpty(title)) {
-      return;
-    }
-
-    if (isEmpty(title) && isEmpty(this.additionalFilters)) {
-      this.setProperties({ topics: null, loading: false });
-      return;
-    }
-
-    const currentTopicId = this.currentTopicId;
-    const selectedTopics = this.selectedTopics;
-    const titleWithFilters = `${title} ${this.additionalFilters}`;
-    let searchParams = {};
-
-    if (!isEmpty(title)) {
-      searchParams.typeFilter = "topic";
-      searchParams.restrictToArchetype = "regular";
-      searchParams.searchForId = true;
-    }
-
-    searchForTerm(titleWithFilters, searchParams).then(results => {
-      if (results && results.posts && results.posts.length > 0) {
-        const store = Discourse.__container__.lookup("service:store");
-        const topicMap = [];
-        results.posts.mapBy("topic").filter(t => t.id !== currentTopicId)
-        .filter(t =>selectedTopics.every(st => t.id !== st.id)).forEach(t => (topicMap.push(store.createRecord("topic", t))));
-        this.set(
-          "topics",
-          topicMap
-        );
-      } else {
-        this.setProperties({ topics: null, loading: false });
-      }
-    });
-  }, 300),
+  search(title) {
+    debounce(
+      this,
+      function() {
+        if (!this.element || this.isDestroying || this.isDestroyed || isEmpty(title)) {
+          return;
+        }
+    
+        if (isEmpty(title) && isEmpty(this.additionalFilters)) {
+          this.setProperties({ topics: null, loading: false });
+          return;
+        }
+    
+        const currentTopicId = this.currentTopicId;
+        const selectedTopics = this.selectedTopics;
+        const titleWithFilters = `${title} ${this.additionalFilters}`;
+        let searchParams = {};
+    
+        if (!isEmpty(title)) {
+          searchParams.typeFilter = "topic";
+          searchParams.restrictToArchetype = "regular";
+          searchParams.searchForId = true;
+        }
+    
+        searchForTerm(titleWithFilters, searchParams).then(results => {
+          if (results && results.posts && results.posts.length > 0) {
+            const store = Discourse.__container__.lookup("service:store");
+            const topicMap = [];
+            results.posts.mapBy("topic").filter(t => t.id !== currentTopicId)
+            .filter(t =>selectedTopics.every(st => t.id !== st.id)).forEach(t => (topicMap.push(store.createRecord("topic", t))));
+            this.set(
+              "topics",
+              topicMap
+            );
+          } else {
+            this.setProperties({ topics: null, loading: false });
+          }
+        })
+      },
+      300
+    )
+  },
 
   actions: {
     //TODO output as ids in action
