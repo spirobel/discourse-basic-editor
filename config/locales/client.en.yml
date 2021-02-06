@@ -2,6 +2,10 @@ en:
   js:
     composer:
       basic_editor_title: "Basic editor"
+      basic_actions:
+        vanilla_cat:
+          label: "Vanilla Cat"
+          desc: "vanilla action to summon a vanilla cat"
     category:
       basic_editor_setting_heading: "basic editor"
       replace_editor: "custom editor component:"
