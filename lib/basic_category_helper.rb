@@ -1,8 +1,11 @@
 class BasicCategoryHelper
-  def self.create_category(name, replace_editor, replace_preview, position=nil)
+  # category names by themselves are not unique and might
+  # later be overriden by internationalization code
+  # => basic_name is necessary to uniquely address them
+  #    in the frontend.
+  def self.create_category(name, basic_name, position=nil)
     category = self.create_category_raw(name, position)
-    category.custom_fields['replace_editor'] = replace_editor
-    category.custom_fields['replace_preview'] = replace_preview
+    category.custom_fields['basic_name'] = basic_name
     category.save_custom_fields(true)
   end
   def self.create_category_raw(name, position=nil)

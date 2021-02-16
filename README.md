@@ -26,3 +26,10 @@ In these pre initializers certain object factories are registered, that can late
 To craft this space, where people and data can harmonize, we need to take on two perspectives: the view from the eyes of the user and the view that puts the data in the center. We need to observe the user when he is acting. Through this observation we can compartmentalize the user into different actors. Not every user takes every action. There are different groups of users that have certain sets of actions. Its important to keep the amount of actions per actor low, to not clutter the interface and overwhelm the user.
 So we define the actors that will act in the space that we are creating. The actors are defined by a set of actions that they can take, what their homepage and hamburger menu will look like and how the data is displayed to them.
 ...
+
+##category helper docs
+migrations will fail because we need a user account first to create categories. workaround:
+install discourse
+do skip_post_migrate
+create admin account: rake admin:create
+then migrate d/migrate
