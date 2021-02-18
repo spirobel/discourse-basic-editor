@@ -2,7 +2,7 @@ import { withPluginApi } from "discourse/lib/plugin-api";
 import EmberObject from "@ember/object";
 import { computed } from "@ember/object";
 import { getOwner } from 'discourse-common/lib/get-owner';
-
+import { iconNode } from "discourse-common/lib/icon-library";
 function injectBasicObjects(api) {
   let VanillaRole = EmberObject.extend({
     init() {
@@ -29,6 +29,34 @@ api.container.registry.register('roles:vanilla', VanillaRole)
      return vanilla.actions;
    })
  });
+
+api.reopenWidget("header",{
+  toggleActionsMenu(){
+    this.state.actionsVisible = !this.state.actionsVisible;
+    this.toggleBodyScrolling(this.state.actionsVisible);
+    console.log("actions")
+  },
+})
+ api.reopenWidget("header-icons", {
+       html(attrs) {
+        let su = this._super(attrs)
+        const actions = this.attach("header-dropdown", {
+          title: "actions.title",
+          icon: "edit",
+          iconId: "actions-button",
+          action: "toggleActionsMenu",
+          active: attrs.actionsVisible,
+          href: "",
+          classNames: ["actions-dropdown"],
+        });
+        su.splice(1, 0, actions);
+        return su;
+       },
+   });
+
+
+
+
 }
 export default {
   name: "inject-basic-objects",
