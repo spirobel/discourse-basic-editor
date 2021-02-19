@@ -11,10 +11,13 @@ export const ActionsMenuClass = {
     showFAQ: true,
     showAbout: true,
   },
+  panelContents(){
+    return this.attach("actions-panel-content")
+  },
   html() {
-    
+
     return this.attach("menu-panel", {
-      contents: function(){return h('div',[h('span',"lolacctions")]) } ,
+      contents: () => this.panelContents() ,
       maxWidth: this.settings.maxWidth,
     });
 
@@ -50,3 +53,9 @@ export const ActionsMenuClass = {
   },
 };
 createWidget("actions-menu", ActionsMenuClass)
+createWidget("actions-panel-content",{
+  tagName: "div.actions-panel-content",
+  template: hbs`
+   {{d-icon "edit"}}
+  `,
+})
