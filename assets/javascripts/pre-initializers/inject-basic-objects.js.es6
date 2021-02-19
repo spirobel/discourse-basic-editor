@@ -43,7 +43,7 @@ api.reopenWidget("header",{
         const actions = this.attach("header-dropdown", {
           title: "actions.title",
           icon: "edit",
-          iconId: "actions-button",
+          iconId: "toggle-actions-menu",
           action: "toggleActionsMenu",
           active: attrs.actionsVisible,
           href: "",
@@ -54,7 +54,9 @@ api.reopenWidget("header",{
        },
    });
 
-
+ api.addHeaderPanel('actions-menu', 'actionsVisible', function(attrs, state) {
+    return { name: attrs.name, description: state.description };
+ });
 
 
 }
