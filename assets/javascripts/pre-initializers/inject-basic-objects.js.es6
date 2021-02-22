@@ -18,6 +18,16 @@ function injectBasicObjects(api) {
        icon: "cat",
        id: "summon_a_vanilla_cat",
      });
+     items.push({
+      name: I18n.t(
+        "composer.basic_actions.vanilla_plus.label"
+      ),
+      description: I18n.t(
+        "composer.basic_actions.vanilla_plus.desc"
+      ),
+      icon: "plus",
+      id: "summon_a_vanilla_plus",
+    });
      this.actions = items;
     }
   });
@@ -55,7 +65,11 @@ api.reopenWidget("header",{
    });
 
  api.addHeaderPanel('actions-menu', 'actionsVisible', function(attrs, state) {
-    return { name: attrs.name, description: state.description };
+    //Todo lookup current role
+    console.log("addpanel",this)
+     let r = this.register.lookup('roles:vanilla')
+     console.log(r)
+    return { name: attrs.name, description: state.description, role: r };
  });
 
 
