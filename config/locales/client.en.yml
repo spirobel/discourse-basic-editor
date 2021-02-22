@@ -6,6 +6,9 @@ en:
         vanilla_cat:
           label: "Vanilla Cat"
           desc: "vanilla action to summon a vanilla cat"
+        vanilla_plus:
+          label: "Vanilla Plus"
+          desc: "vanilla action to summon a vanilla plus"
     category:
       basic_editor_setting_heading: "basic editor"
       replace_editor: "custom editor component:"

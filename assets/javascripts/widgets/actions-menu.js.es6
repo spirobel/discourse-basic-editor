@@ -7,20 +7,22 @@ import { later } from "@ember/runloop";
 export const ActionsMenuClass = {
   settings: {
     showCategories: true,
-    maxWidth: 320,
+    maxWidth: 400,
     showFAQ: true,
     showAbout: true,
   },
   panelContents(){
-    return this.attach("actions-panel-content")
+    return this.attach("actions-panel-content",this.attrs)
   },
   html() {
+    return this.attach("actions-panel-content",this.attrs)
 
+/*
     return this.attach("menu-panel", {
       contents: () => this.panelContents() ,
       maxWidth: this.settings.maxWidth,
     });
-
+*/
   },
 
   clickOutsideMobile(e) {
@@ -54,8 +56,41 @@ export const ActionsMenuClass = {
 };
 createWidget("actions-menu", ActionsMenuClass)
 createWidget("actions-panel-content",{
-  tagName: "div.actions-panel-content",
+  init(attrs) {
+    attrs.role.actions.forEach(a =>{
+      a.translatedLabel = a.name;
+    })
+  },
+  buildAttributes(attrs) {
+     return { "data-max-width": 400 };
+
+  },
+  tagName: "div.menu-panel",
   template: hbs`
-   {{d-icon "edit"}}
+  <div class='panel-body'>
+  <div class='panel-body-contents'>
+  {{attach
+  widget="widget-dropdown-body"
+  attrs=(hash
+    id="actions-array"
+    class="opened"
+    content=attrs.role.actions
+  )
+}}
+  <ul class="panel-actions-collection">
+  {{#each attrs.role.actions as  |action|}}
+  <li class="panel-actions-row is-highlighted">
+ <div class="icon">
+     {{d-icon action.icon translatedtitle=(dasherize title)}}
+ </div>
+<div class="texts">
+ <span class="name">{{action.name}}</span>
+ <span class="desc">{{action.description}}</span>
+</div>
+</li>
+{{/each}}
+</ul>
+</div>
+</div>
   `,
 })
