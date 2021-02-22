@@ -2,7 +2,7 @@ import hbs from "discourse/widgets/hbs-compiler";
 import { createWidget } from "discourse/widgets/widget";
 import { h } from "virtual-dom";
 import I18n from "I18n";
-
+import { later } from "@ember/runloop";
 
 export const ActionsMenuClass = {
   settings: {
