@@ -41,10 +41,15 @@ api.container.registry.register('roles:vanilla', VanillaRole)
  });
 
 api.reopenWidget("header",{
+  closeActionsMenu(){
+    this.state.actionsVisible = false;
+    this.toggleBodyScrolling(this.state.actionsVisible);
+    console.log("actions closed")
+  },
   toggleActionsMenu(){
     this.state.actionsVisible = !this.state.actionsVisible;
     this.toggleBodyScrolling(this.state.actionsVisible);
-    console.log("actions")
+    console.log("actions", this.state.actionsVisible)
   },
 })
  api.reopenWidget("header-icons", {

@@ -65,12 +65,22 @@ createWidget("actions-panel-content",{
      return { "data-max-width": 400 };
 
   },
+  _onChange(params) {
+    this.sendWidgetAction("closeActionsMenu");
+  if (this.attrs.onChange) {
+    if (typeof this.attrs.onChange === "string") {
+      this.sendWidgetAction(this.attrs.onChange, params);
+    } else {
+      this.attrs.onChange(params);
+    }
+  }
+},
   tagName: "div.menu-panel",
   template: hbs`
   <div class='panel-body'>
   <div class='panel-body-contents'>
   {{attach
-  widget="widget-dropdown-body"
+  widget="actions-dropdown-body"
   attrs=(hash
     id="actions-array"
     class="opened"
@@ -94,3 +104,73 @@ createWidget("actions-panel-content",{
 </div>
   `,
 })
+export const ActionsDropdownItemClass = {
+  tagName: "div",
+
+  transform(attrs) {
+    return {
+      content:
+        attrs.item === "separator"
+          ? "<hr>"
+          : attrs.item.html
+          ? attrs.item.html
+          : attrs.item.translatedLabel
+          ? attrs.item.translatedLabel
+          : I18n.t(attrs.item.label),
+    };
+  },
+
+  buildAttributes(attrs) {
+    return {
+      "data-id": attrs.item.id,
+      tabindex: attrs.item === "separator" ? -1 : 0,
+    };
+  },
+
+  buildClasses(attrs) {
+    return [
+      "actions-dropdown-item",
+      attrs.item === "separator" ? "separator" : `item-${attrs.item.id}`,
+    ].join(" ");
+  },
+
+  keyDown(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      this.sendWidgetAction("_onChange", this.attrs.item);
+    }
+  },
+
+  click(event) {
+    event.preventDefault();
+    console.log("actionsitemclick")
+    this.sendWidgetAction("_onChange", this.attrs.item);
+  },
+
+  template: hbs`
+    {{#if attrs.item.icon}}
+      {{d-icon attrs.item.icon}}
+    {{/if}}
+    {{{transformed.content}}}
+  `,
+};
+
+createWidget("actions-dropdown-item", ActionsDropdownItemClass);
+
+export const ActionsDropdownBodyClass = {
+  tagName: "div",
+
+  buildClasses(attrs) {
+    return `actions-dropdown-body ${attrs.class || ""}`;
+  },
+  template: hbs`
+    {{#each attrs.content as |item|}}
+      {{attach
+        widget="actions-dropdown-item"
+        attrs=(hash item=item)
+      }}
+    {{/each}}
+  `,
+};
+
+createWidget("actions-dropdown-body", ActionsDropdownBodyClass);
