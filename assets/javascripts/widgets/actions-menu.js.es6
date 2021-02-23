@@ -79,6 +79,7 @@ createWidget("actions-panel-content",{
   template: hbs`
   <div class='panel-body'>
   <div class='panel-body-contents'>
+  <div class='actions-dropdown'>
   {{attach
   widget="actions-dropdown-body"
   attrs=(hash
@@ -87,6 +88,7 @@ createWidget("actions-panel-content",{
     content=attrs.role.actions
   )
 }}
+</div>
   <ul class="panel-actions-collection">
   {{#each attrs.role.actions as  |action|}}
   <li class="panel-actions-row is-highlighted">
