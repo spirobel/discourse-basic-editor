@@ -89,19 +89,6 @@ createWidget("actions-panel-content",{
   )
 }}
 </div>
-  <ul class="panel-actions-collection">
-  {{#each attrs.role.actions as  |action|}}
-  <li class="panel-actions-row is-highlighted">
- <div class="icon">
-     {{d-icon action.icon translatedtitle=(dasherize title)}}
- </div>
-<div class="texts">
- <span class="name">{{action.name}}</span>
- <span class="desc">{{action.description}}</span>
-</div>
-</li>
-{{/each}}
-</ul>
 </div>
 </div>
   `,
@@ -150,10 +137,14 @@ export const ActionsDropdownItemClass = {
   },
 
   template: hbs`
-    {{#if attrs.item.icon}}
+  <div class="icons">
       {{d-icon attrs.item.icon}}
-    {{/if}}
-    {{{transformed.content}}}
+</div>
+    <div class="texts">
+     <span class="name">{{attrs.item.name}}</span>
+     <span class="desc">{{attrs.item.description}}</span>
+    </div>
+
   `,
 };
 

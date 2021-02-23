@@ -88,7 +88,7 @@
     padding: 0.25em;
     background: var(--secondary);
     z-index: z("dropdown");
-    border: 1px solid var(--primary-low);
+    //border: 1px solid var(--primary-low);
     max-height: 250px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -118,6 +118,49 @@
 
     &:hover {
       background: var(--tertiary-low);
+    }
+    //taken from selectkit dropdown selectbox common scss
+    margin: 0;
+
+  .icons {
+    display: flex;
+    align-self: flex-start;
+    margin-right: 0.5em;
+
+    .d-icon {
+      flex: 0 0 100%;
+      overflow: hidden;
+      font-size: $font-up-2;
+      align-self: center;
+      margin-right: 0;
+    }
+  }
+  .texts {
+      line-height: $line-height-medium;
+      flex: 1 1 0%;
+      align-items: flex-start;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+
+      .name {
+        flex: 1 1 auto;
+        font-weight: bold;
+        font-size: $font-0;
+        color: var(--primary);
+        padding: 0;
+        @include ellipsis;
+        max-width: 100%;
+      }
+
+      .desc {
+        flex: 1 1 auto;
+        font-size: $font-down-1;
+        font-weight: normal;
+        color: var(--primary-medium);
+        white-space: normal;
+        min-width: 350px;
+      }
     }
   }
 
