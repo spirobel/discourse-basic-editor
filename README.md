@@ -26,7 +26,7 @@ In these pre initializers certain object factories are registered, that can late
 To craft this space, where people and data can harmonize, we need to take on two perspectives: the view from the eyes of the user and the view that puts the data in the center. We need to observe the user when he is acting. Through this observation we can compartmentalize the user into different actors. Not every user takes every action. There are different groups of users that have certain sets of actions. Its important to keep the amount of actions per actor low, to not clutter the interface and overwhelm the user.
 So we define the actors that will act in the space that we are creating. The actors are defined by a set of actions that they can take, what their homepage and hamburger menu will look like and how the data is displayed to them.
 
-##actions and reactions
+## Actions and reactions
 
 The pencil icon in the nav bar leads to a set of actions that will create new topics. The content of the hamburger menu is replaced with a bunch of reactive calls to action.
 An example could be this: Action: Ask people for help! Result: open composer to create new topic in questions category. Reaction: Help People! Result: open questions category.
@@ -34,7 +34,7 @@ This will result in a feedback loop between users acting and reacting. Ideally t
 What would happen if the [pidgeon](https://www.youtube.com/watch?v=I_ctJqjlrHA) was exposed to a set of categories of content to actively explore? would it develop superstitons like this [one](https://www.youtube.com/watch?v=8uPmeWiFTIw) ? Would the experiment still work if the inside of the box was cluttered with tons of knobs and buttons or would the pidgeon just become more and more erratic and superstitious?
 Its important to keep the user interface as simple as possible so the user behavior stays as predictable as possible.
 
-##category helper docs
+## Category helper docs
 
 migrations will fail because we need a user account first to create categories. workaround:
 install discourse
