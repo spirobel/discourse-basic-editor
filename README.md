@@ -43,7 +43,7 @@ Do something like this in your plugin.rb to register the fixtures folder.
   register_seedfu_fixtures(Rails.root.join("plugins", "plugin-folder-name", "db", "fixtures").to_s)
 ```
 
-and then in something like: discourse/plugin-folder-name/db/fixtures/503_categories.rb
+and then in a file with a path like this: discourse/plugin-folder-name/db/fixtures/503_categories.rb
 with content like this:
 
 ```
