@@ -30,14 +30,54 @@ So we define the actors that will act in the space that we are creating. The act
 
 The pencil icon in the nav bar leads to a set of actions that will create new topics. The content of the hamburger menu is replaced with a bunch of reactive calls to action.
 An example could be this: Action: Ask people for help! Result: open composer to create new topic in questions category. Reaction: Help People! Result: open questions category.
-This will result in a feedback loop between users acting and reacting. Ideally these user groups come from a different kind of target group that can provide value to each other. The reason to switch from the original interface to this is explained in the following parapgraph.
-What would happen if the [pidgeon](https://www.youtube.com/watch?v=I_ctJqjlrHA) was exposed to a set of categories of content to actively explore? would it develop superstitons like this [one](https://www.youtube.com/watch?v=8uPmeWiFTIw) ? Would the experiment still work if the inside of the box was cluttered with tons of knobs and buttons or would the pidgeon just become more and more erratic and superstitious?
+This will result in a feedback loop between users acting and reacting. Ideally these user groups come from a different kind of target group that can provide value to each other. The reason to switch from the original interface to this is explained in the following paragraph.
+What would happen if the [pigeon](https://www.youtube.com/watch?v=I_ctJqjlrHA) was exposed to a set of categories of content to actively explore? would it develop superstitions like this [one](https://www.youtube.com/watch?v=8uPmeWiFTIw) ? Would the experiment still work if the inside of the box was cluttered with tons of knobs and buttons or would the pigeon just become more and more erratic and superstitious?
 Its important to keep the user interface as simple as possible so the user behavior stays as predictable as possible.
 
 ## Category helper docs
 
 migrations will fail because we need a user account first to create categories. workaround:
-install discourse
-do skip_post_migrate
-create admin account: rake admin:create
-then migrate d/migrate
+Do something like this in your plugin.rb to register the fixtures folder.
+
+```
+  register_seedfu_fixtures(Rails.root.join("plugins", "plugin-folder-name", "db", "fixtures").to_s)
+```
+
+and then in something like: discourse/plugin-folder-name/db/fixtures/503_categories.rb
+with content like this:
+
+```
+require_dependency 'basic_category_helper.rb'
+BasicCategoryHelper.create_category("lol", "lol", 0)
+BasicCategoryHelper.create_category("rofl", "rofl")
+
+```
+
+## Export  Import commands
+
+Export:
+
+```
+d/rake "site_settings:export > settings.yml"
+```
+
+Import:
+
+```
+d/rake "site_settings:import < settings.yml"
+```
+
+## Workflow
+
+Reset:
+
+```
+// if you changed the settings:
+d/rake "site_settings:export > settings.yml"
+
+bin/docker/reset_db
+bin/docker/rake db:migrate
+d/rake "site_settings:import < settings.yml"
+d/rake admin:create
+bin/docker/unicorn
+```
