@@ -17,7 +17,20 @@ function initializeDiscourseBasicEditor(api) {
   if(Discourse.SiteSettings.basic_editor_home_component){
     setDefaultHomepage('/');
   }
+  api.reopenWidget("hamburger-menu", {
 
+      html() {
+          ///todo: move lookup to init?
+        //Todo lookup current role
+        console.log("hampanel",this)
+         let r = this.register.lookup('roles:vanilla')
+         console.log(r)
+        return this.attach("actions-panel-content", {
+          id: "reactions",
+          role: r,
+        });
+      },
+  });
   api.onToolbarCreate(toolbar => {
       toolbar.addButton({
         id: "basic_editor",

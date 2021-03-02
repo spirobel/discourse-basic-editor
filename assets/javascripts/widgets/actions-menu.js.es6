@@ -5,24 +5,9 @@ import I18n from "I18n";
 import { later } from "@ember/runloop";
 
 export const ActionsMenuClass = {
-  settings: {
-    showCategories: true,
-    maxWidth: 400,
-    showFAQ: true,
-    showAbout: true,
-  },
-  panelContents(){
-    return this.attach("actions-panel-content",this.attrs)
-  },
+  buildKey: (attrs) => `actions-menu-${attrs.id}`,
   html() {
     return this.attach("actions-panel-content",this.attrs)
-
-/*
-    return this.attach("menu-panel", {
-      contents: () => this.panelContents() ,
-      maxWidth: this.settings.maxWidth,
-    });
-*/
   },
 
   clickOutsideMobile(e) {
@@ -56,6 +41,7 @@ export const ActionsMenuClass = {
 };
 createWidget("actions-menu", ActionsMenuClass)
 createWidget("actions-panel-content",{
+  buildKey: (attrs) => `actions-panel-content-${attrs.id}`,
   init(attrs) {
     attrs.role.actions.forEach(a =>{
       a.translatedLabel = a.name;
