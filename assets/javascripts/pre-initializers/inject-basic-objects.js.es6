@@ -41,10 +41,14 @@ api.container.registry.register('roles:vanilla', VanillaRole)
  });
 
 api.reopenWidget("header",{
+  defaultState(){
+    let s = this._super()
+    s.actionsVisible = false;
+    return s
+  },
   closeActionsMenu(){
     this.state.actionsVisible = false;
     this.toggleBodyScrolling(this.state.actionsVisible);
-    console.log("actions closed")
   },
   toggleActionsMenu(){
     this.state.actionsVisible = !this.state.actionsVisible;
@@ -53,14 +57,14 @@ api.reopenWidget("header",{
   },
 })
  api.reopenWidget("header-icons", {
-       html(attrs) {
+       html(attrs,state) {
         let su = this._super(attrs)
         const actions = this.attach("header-dropdown", {
           title: "actions.title",
           icon: "edit",
           iconId: "toggle-actions-menu",
           action: "toggleActionsMenu",
-          active: attrs.actionsVisible,
+          active: state.actionsVisible,
           href: "",
           classNames: ["actions-dropdown"],
         });
@@ -71,9 +75,8 @@ api.reopenWidget("header",{
 
  api.addHeaderPanel('actions-menu', 'actionsVisible', function(attrs, state) {
     //Todo lookup current role
-    console.log("addpanel",this)
      let r = this.register.lookup('roles:vanilla')
-     console.log(r)
+     console.log( "addpanel attrs, state: ",attrs,state)
     return { name: attrs.name, description: state.description, role: r };
  });
 

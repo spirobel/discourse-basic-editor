@@ -27,7 +27,7 @@ export const ActionsMenuClass = {
       const $headerCloak = $(".header-cloak");
       $headerCloak.addClass("animate");
       $headerCloak.css("opacity", 0);
-      later(() => this.sendWidgetAction("toggleActionsMenu"), 200);
+      later(() => this.sendWidgetAction("closeActionsMenu"), 200);
     }
   },
 
@@ -35,7 +35,7 @@ export const ActionsMenuClass = {
     if (this.site.mobileView) {
       this.clickOutsideMobile(e);
     } else {
-      this.sendWidgetAction("toggleActionsMenu");
+      this.sendWidgetAction("closeActionsMenu");
     }
   },
 };
