@@ -61,6 +61,7 @@ function initializeDiscourseBasicEditor(api) {
 //UPDATE
 //also:this.action: "edit" and this.topic.id
 //topic.currentPost: 1
+//todo insert formversion into json
  api.composerBeforeSave(function() {
    if(!this.category ){return Promise.resolve();}
    let b = this.category.replace_editor
