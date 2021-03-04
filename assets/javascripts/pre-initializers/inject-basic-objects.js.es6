@@ -41,11 +41,6 @@ api.container.registry.register('roles:vanilla', VanillaRole)
  });
 
 api.reopenWidget("header",{
-  defaultState(){
-    let s = this._super()
-    s.actionsVisible = false;
-    return s
-  },
   closeActionsMenu(){
     this.state.actionsVisible = false;
     this.toggleBodyScrolling(this.state.actionsVisible);
@@ -53,7 +48,6 @@ api.reopenWidget("header",{
   toggleActionsMenu(){
     this.state.actionsVisible = !this.state.actionsVisible;
     this.toggleBodyScrolling(this.state.actionsVisible);
-    console.log("actions", this.state.actionsVisible)
   },
 })
  api.reopenWidget("header-icons", {
@@ -76,7 +70,6 @@ api.reopenWidget("header",{
  api.addHeaderPanel('actions-menu', 'actionsVisible', function(attrs, state) {
     //Todo lookup current role
      let r = this.register.lookup('roles:vanilla')
-     console.log( "addpanel attrs, state: ",attrs,state)
     return { name: attrs.name, description: state.description, role: r };
  });
 
