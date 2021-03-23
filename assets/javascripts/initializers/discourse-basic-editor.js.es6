@@ -4,7 +4,7 @@ import loadScript from "discourse/lib/load-script";
 import discourseComputed, {  observes,  on } from "discourse-common/utils/decorators";
 import ComposerEditor from "discourse/components/composer-editor";
 import putCursorAtEnd from "discourse/lib/put-cursor-at-end";
-import { debounce, later, next, schedule, throttle } from "@ember/runloop";
+import { schedule, throttle } from "@ember/runloop";
 import { findRawTemplate } from "discourse/lib/raw-templates";
 import { onToolbarCreate } from 'discourse/components/d-editor';
 import { getOwner } from 'discourse-common/lib/get-owner';
