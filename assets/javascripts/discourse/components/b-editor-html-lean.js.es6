@@ -3,7 +3,6 @@ import { getOwner } from 'discourse-common/lib/get-owner';
 import { cookAsync } from "discourse/lib/text";
 import { ajax } from "discourse/lib/ajax";
 import discourseComputed, {  observes,  on } from "discourse-common/utils/decorators";
-import { debounce, later, next, schedule, scheduleOnce } from "@ember/runloop";
 import ENV from "discourse-common/config/environment";
 export default Ember.Component.extend({
   classNames: ["d-editor"],
