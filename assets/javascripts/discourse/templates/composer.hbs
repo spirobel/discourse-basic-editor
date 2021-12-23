@@ -63,6 +63,7 @@
         </div>
 
         {{#composer-editor
+          advancedEditor=advancedEditor
           topic=topic
           composer=model
           lastValidatedAt=lastValidatedAt
@@ -85,6 +86,7 @@
           togglePreview=(action "togglePreview")
           processPreview=showPreview
           showToolbar=showToolbar
+          showPreview=showPreview
           afterRefresh=(action "afterRefresh")
           focusTarget=focusTarget
           disableTextarea=disableTextarea
@@ -113,19 +115,21 @@
                 <div class="title-and-category {{if showPreview "with-preview"}}">
                   {{composer-title composer=model lastValidatedAt=lastValidatedAt focusTarget=focusTarget}}
 
-                  {{#if model.showCategoryChooser}}
-                    <div class="category-input">
-                      {{category-chooser
-                        value=model.categoryId
-                        onChange=(action (mut model.categoryId))
-                        isDisabled=disableCategoryChooser
-                        options=(hash
-                          scopedCategoryId=scopedCategoryId
-                          prioritizedCategoryId=prioritizedCategoryId
-                        )
-                      }}
-                      {{popup-input-tip validation=categoryValidation}}
-                    </div>
+                  {{#if siteSettings.basic_editor_enable_category_chooser}}
+                    {{#if model.showCategoryChooser}}
+                      <div class="category-input">
+                        {{category-chooser
+                          value=model.categoryId
+                          onChange=(action (mut model.categoryId))
+                          isDisabled=disableCategoryChooser
+                          options=(hash
+                            scopedCategoryId=scopedCategoryId
+                            prioritizedCategoryId=prioritizedCategoryId
+                          )
+                        }}
+                        {{popup-input-tip validation=categoryValidation}}
+                      </div>
+                    {{/if}}
                   {{/if}}
 
                   {{#if canEditTags}}
@@ -223,26 +227,36 @@
           {{#if site.mobileView}}
             {{plugin-outlet name="composer-mobile-buttons-bottom" connectorTagName="" args=(hash model=model)}}
 
-            {{#if allowUpload}}
-              <a id="mobile-file-upload" class="btn btn-default no-text mobile-file-upload {{if isUploading "hidden"}}"  aria-label={{i18n "composer.upload_title"}}>
-                {{d-icon uploadIcon}}
-              </a>
+            {{#if advancedEditor}}
+              {{#if allowUpload}}
+                <a id="mobile-file-upload" class="btn btn-default no-text mobile-file-upload {{if isUploading "hidden"}}"  aria-label={{i18n "composer.upload_title"}}>
+                  {{d-icon uploadIcon}}
+                </a>
+              {{/if}}
             {{/if}}
 
-            <a href class="btn btn-default no-text mobile-preview" title={{i18n "composer.show_preview"}} {{action "togglePreview"}} aria-label={{i18n "preview"}}>
-              {{d-icon "desktop"}}
-            </a>
+            {{#unless (and model.category.replace_preview model.topicFirstPost)}}
+              <a href class="btn btn-default no-text mobile-preview" title={{i18n "composer.show_preview"}} {{action "togglePreview"}} aria-label={{i18n "preview"}}>
+                {{d-icon "desktop"}}
+              </a>
+            {{else}}
+              {{component model.category.replace_preview composer=model}}
+            {{/unless}}
 
             {{#if showPreview}}
               {{d-button action=(action "togglePreview") class="hide-preview" ariaLabel="composer.hide_preview" icon="pencil-alt"}}
             {{/if}}
           {{else}}
-            {{d-button
-              action=(action "togglePreview")
-              translatedTitle=toggleText
-              icon="angle-double-left"
-              class=(concat "btn-flat btn-mini-toggle toggle-preview " (unless showPreview "active"))
-              }}
+            {{#unless (and model.category.replace_preview model.topicFirstPost)}}
+              {{d-button
+                action=(action "togglePreview")
+                translatedTitle=toggleText
+                icon="angle-double-left"
+                class=(concat "btn-flat btn-mini-toggle toggle-preview " (unless showPreview "active"))
+                }}
+            {{else}}
+              {{component model.category.replace_preview composer=model}}
+            {{/unless}}
           {{/if}}
         </div>
       </div>
