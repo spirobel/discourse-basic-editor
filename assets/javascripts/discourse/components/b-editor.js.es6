@@ -24,11 +24,12 @@ export default Ember.Component.extend({
         if (this._state !== "inDOM") {
           return;
         }
-        const $preview = $(this.element.querySelector(".d-editor-preview"));
-        if ($preview.length === 0) return;
+
+        const preview = this.element.querySelector(".d-editor-preview");
+        if (!preview) return;
 
         if (this.previewUpdated) {
-          this.previewUpdated($preview);
+          this.previewUpdated(preview);
         }
       });
     });
