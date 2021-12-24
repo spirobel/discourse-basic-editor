@@ -1,55 +1,66 @@
 {{#unless (and composer.category.replace_editor composer.topicFirstPost)}}
-{{#unless advancedEditor}}
-{{b-editor
-  tabindex="4"
-  composer=composer
-  value=composer.reply
-  placeholder=replyPlaceholder
-  previewUpdated=(action "previewUpdated")
-  markdownOptions=markdownOptions
-  extraButtons=(action "extraButtons")
-  importQuote=(action "importQuote")
-  showUploadModal=showUploadModal
-  togglePreview=(action "togglePreview")
-  validation=validation
-  loading=composer.loading
-  forcePreview=forcePreview
-  showLink=showLink
-  showPreview=showPreview
-  advancedEditor=advancedEditor
-  composerEvents=true
-  onExpandPopupMenuOptions=(action "onExpandPopupMenuOptions")
-  onPopupMenuAction=onPopupMenuAction
-  popupMenuOptions=popupMenuOptions
-  disabled=disableTextarea
-  outletArgs=(hash composer=composer editorType="composer")}}
-{{else}}
-  {{d-editor
-    tabindex="4"
-    value=composer.reply
-    placeholder=replyPlaceholder
-    previewUpdated=(action "previewUpdated")
-    markdownOptions=markdownOptions
-    extraButtons=(action "extraButtons")
-    importQuote=(action "importQuote")
-    showUploadModal=showUploadModal
-    togglePreview=(action "togglePreview")
-    validation=validation
-    loading=composer.loading
-    forcePreview=forcePreview
-    showLink=showLink
-    composerEvents=true
-    onExpandPopupMenuOptions=(action "onExpandPopupMenuOptions")
-    onPopupMenuAction=onPopupMenuAction
-    popupMenuOptions=popupMenuOptions
-    disabled=disableTextarea
-    outletArgs=(hash composer=composer editorType="composer")}}
+  {{#unless advancedEditor}}
+    {{#b-editor
+      tabindex="4"
+      composer=composer
+      value=composer.reply
+      placeholder=replyPlaceholder
+      previewUpdated=(action "previewUpdated")
+      markdownOptions=markdownOptions
+      extraButtons=(action "extraButtons")
+      importQuote=(action "importQuote")
+      showUploadModal=showUploadModal
+      togglePreview=(action "togglePreview")
+      validation=validation
+      loading=composer.loading
+      forcePreview=forcePreview
+      showLink=showLink
+      showPreview=showPreview
+      advancedEditor=advancedEditor
+      composerEvents=true
+      onExpandPopupMenuOptions=(action "onExpandPopupMenuOptions")
+      onPopupMenuAction=onPopupMenuAction
+      popupMenuOptions=popupMenuOptions
+      disabled=disableTextarea
+      outletArgs=(hash composer=composer editorType="composer")
+    }}
+      {{yield}}
+    {{/b-editor}}
+  {{else}}
+    {{#d-editor
+      tabindex="4"
+      value=composer.reply
+      placeholder=replyPlaceholder
+      previewUpdated=(action "previewUpdated")
+      markdownOptions=markdownOptions
+      extraButtons=(action "extraButtons")
+      importQuote=(action "importQuote")
+      showUploadModal=showUploadModal
+      togglePreview=(action "togglePreview")
+      validation=validation
+      loading=composer.loading
+      forcePreview=forcePreview
+      showLink=showLink
+      composerEvents=true
+      onExpandPopupMenuOptions=(action "onExpandPopupMenuOptions")
+      onPopupMenuAction=onPopupMenuAction
+      popupMenuOptions=popupMenuOptions
+      disabled=disableTextarea
+      outletArgs=(hash composer=composer editorType="composer")
+    }}
+      {{yield}}
+    {{/d-editor}}
 
-  {{#if site.mobileView}}
-    <input type="file" id="mobile-uploader" multiple>
-  {{/if}}
+    {{#if allowUpload}}
+      {{#if acceptsAllFormats}}
+        <input type="file" id="file-uploader" multiple>
+      {{else}}
+        <input type="file" id="file-uploader" accept={{acceptedFormats}} multiple>
+      {{/if}}
+    {{/if}}
+  {{/unless}}
 {{/unless}}
-{{/unless}}
+
 {{#if (and composer.category.replace_editor composer.topicFirstPost)}}
-<div class="full_editor">{{component composer.category.replace_editor composer=composer }}</div>
+  <div class="full_editor">{{component composer.category.replace_editor composer=composer}}</div>
 {{/if}}
